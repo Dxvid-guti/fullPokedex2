@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sumativa-aporte-4": {
+      "hosting": {
+        "app": [
+          "sumativa-aporte-4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sumativa-aporte-4"
+  }
+}
