@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiSeviceService } from '../service/api-sevice.service';
-import { Firestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ export class HomePage {
   pokeInformation: any;
   type: string = '';
 
-  constructor(private api: ApiSeviceService, private db:Firestore) {}
+  constructor(private api: ApiSeviceService, private db:AngularFirestore) {}
 
   // Método para obtener datos de un Pokémon dado su ID.
   getPokemonDataID(infForSearch: any) {
@@ -29,6 +29,8 @@ export class HomePage {
           
           // Imprime el nombre del Pokémon en la consola.
           console.log(this.pokeInformation);
+
+          this.actualizarTipoEnFirebase(this.type)
         }),
         (error => {
           // Captura cualquier error que pueda ocurrir durante la suscripción y lo imprime en la consola.
@@ -38,6 +40,12 @@ export class HomePage {
     } catch (error) {
       console.error(error);
     }
+  }
+  
+  actualizarTipoEnFirebase(nuevoTipo: string) {
+    this.db.collection('pokemons').doc('type').update({ tipos: nuevoTipo })
+      .then(() => console.log('Tipo actualizado en Firebase'))
+      .catch(error => console.error('Error al actualizar tipo en Firebase', error));
   }
 
 }
